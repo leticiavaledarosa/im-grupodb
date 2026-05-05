@@ -8,8 +8,8 @@
 <meta name="apple-mobile-web-app-title" content="IM Grupo DB">
 <meta name="application-name" content="IM Grupo DB">
 <meta name="theme-color" content="#050628">
-<link rel="apple-touch-icon" href="icon_grupodb.svg">
-<link rel="icon" type="image/svg+xml" href="icon_grupodb.svg">
+<link rel="apple-touch-icon" href="icon_grupodb.png">
+<link rel="icon" type="image/png" href="icon_grupodb.png">
 <title>Inteligência de Mercado – Grupo DB</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
@@ -947,9 +947,13 @@ async function ativarNotificacoes() {
   const status = document.getElementById('modalNotifStatus');
   const fab = document.getElementById('fabNotif');
 
-  if (!('Notification' in window)) {
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+  if (!('Notification' in window) || isSafari) {
     status.className = 'modal-status warn';
-    status.textContent = '⚠️ Seu navegador não suporta notificações. Tente pelo Chrome.';
+    status.innerHTML = '⚠️ <strong>Safari não suporta notificações web.</strong><br>Abra o canal pelo <strong>Chrome</strong> e ative os lembretes por lá!';
+    btn.disabled = false;
+    btn.innerHTML = '🔔 Ativar notificações';
     return;
   }
 
