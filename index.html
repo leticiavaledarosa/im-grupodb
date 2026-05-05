@@ -984,6 +984,20 @@ async function ativarNotificacoes() {
 
 // Verifica se já ativou
 window.addEventListener('load', () => {
+  // Esconde botão de notificações no iPhone/iPad
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  if (isIOS) document.getElementById('fabNotif').style.display = 'none';
+
+  // Registra Service Worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/im-grupodb/sw.js')
+      .then(reg => {
+        console.log('Service Worker registrado!', reg);
+        reg.active?.postMessage('agendar');
+      })
+      .catch(err => console.log('Erro SW:', err));
+  }
+
   if (localStorage.getItem('im-notif') === 'true' && Notification.permission === 'granted') {
     const fab = document.getElementById('fabNotif');
     fab.classList.add('on');
