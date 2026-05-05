@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QR Code – Intel de Mercado Grupo DB</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+
+  :root {
+    --teal: #35B6B4;
+    --teal-dark: #006677;
+    --navy: #050628;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: #f0f4f8;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .card {
+    background: white;
+    border-radius: 28px;
+    padding: 40px 48px;
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 60px #00000012, 0 4px 16px #35b6b412;
+    border: 1px solid #e2e8f0;
+  }
+
+  .header {
+    background: linear-gradient(135deg, var(--navy), #0a1155);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-4px); }
+  }
+
+  .robot {
+    font-size: 36px;
+    filter: drop-shadow(0 2px 8px #35b6b450);
+  }
+
+  .header-text { text-align: center; }
+
+  .header-text strong {
+    display: block;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .header-text span {
+    font-size: 11px;
+    color: var(--teal);
+    font-weight: 600;
+  }
+
+  .qr-wrap {
+    background: white;
+    border: 3px solid var(--teal);
+    border-radius: 20px;
+    padding: 20px;
+    display: inline-block;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 24px #35b6b420;
+  }
+
+  #qrcode canvas, #qrcode img {
+    border-radius: 8px;
+  }
+
+  .instructions {
+    font-size: 14px;
+    color: #5a6890;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .instructions strong { color: var(--navy); }
+
+  .link-box {
+    background: #f0fafa;
+    border: 1.5px solid var(--teal);
+    border-radius: 12px;
+    padding: 10px 16px;
+    font-size: 12px;
+    color: var(--teal-dark);
+    font-weight: 700;
+    word-break: break-all;
+    margin-bottom: 20px;
+    letter-spacing: 0.01em;
+  }
+
+  .copy-btn {
+    background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+    border: none;
+    border-radius: 22px;
+    padding: 10px 28px;
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 14px #35b6b430;
+  }
+
+  .copy-btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+
+  .footer {
+    margin-top: 24px;
+    font-size: 11px;
+    color: #b0bec5;
+    font-weight: 500;
+  }
+
+  .footer span { color: var(--teal); font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="header">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <!-- Bars -->
+      <div style="display:flex;align-items:flex-end;gap:4px;height:44px;flex-shrink:0;">
+        <div style="width:8px;height:16px;border-radius:3px;background:linear-gradient(180deg,#35B6B4,#006677)"></div>
+        <div style="width:8px;height:28px;border-radius:3px;background:linear-gradient(180deg,#35B6B4,#006677)"></div>
+        <div style="width:8px;height:44px;border-radius:3px;background:linear-gradient(180deg,#35B6B4,#006677)"></div>
+        <div style="width:8px;height:20px;border-radius:3px;background:linear-gradient(180deg,#35B6B455,#00667733)"></div>
+      </div>
+      <!-- Divider -->
+      <div style="width:1px;height:48px;background:#35B6B430;flex-shrink:0;"></div>
+      <!-- Text -->
+      <div style="text-align:left;">
+        <div style="font-size:15px;font-weight:700;color:#fff;line-height:1.2;">Inteligência <span style="color:#35B6B4;font-weight:800;">de Mercado</span></div>
+        <div style="font-size:9px;font-weight:600;color:#35B6B4;letter-spacing:0.1em;text-transform:uppercase;margin-top:3px;">Novos Negócios e Estratégia</div>
+        <div style="font-size:8px;font-weight:700;color:white;letter-spacing:0.16em;text-transform:uppercase;opacity:0.35;margin-top:2px;">Grupo DB</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="qr-wrap">
+    <div id="qrcode"></div>
+  </div>
+
+  <p class="instructions">
+    📱 <strong>Aponte a câmera do celular</strong> para o QR Code<br>
+    e acesse o canal de Intel de Mercado!
+  </p>
+
+  <div class="link-box">leticiavaledarosa.github.io/im-grupodb</div>
+
+  <button class="copy-btn" onclick="copiar()">📋 Copiar link</button>
+
+  <div class="footer">Grupo DB · <span>Equipe IM</span> · Inteligência de Mercado · Novos Negócios e Estratégia</div>
+</div>
+
+<script>
+new QRCode(document.getElementById('qrcode'), {
+  text: 'https://leticiavaledarosa.github.io/im-grupodb/',
+  width: 220,
+  height: 220,
+  colorDark: '#050628',
+  colorLight: '#ffffff',
+  correctLevel: QRCode.CorrectLevel.H
+});
+
+function copiar() {
+  navigator.clipboard.writeText('https://leticiavaledarosa.github.io/im-grupodb/');
+  const btn = document.querySelector('.copy-btn');
+  btn.textContent = '✅ Link copiado!';
+  setTimeout(() => btn.textContent = '📋 Copiar link', 2000);
+}
+</script>
+</body>
+</html>
