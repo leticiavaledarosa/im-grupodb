@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Como salvar na tela inicial – IM Grupo DB</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #35B6B4;
+    --teal-dark: #006677;
+    --navy: #050628;
+    --bg: #f0f4f8;
+    --white: #ffffff;
+    --border: #e2e8f0;
+    --text: #0f1a2e;
+    --text-muted: #8898aa;
+    --green: #22c55e;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg);
+    background-image:
+      radial-gradient(ellipse at 10% 0%, #35b6b418 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 100%, #00667712 0%, transparent 50%);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, var(--navy), #0a1155);
+    padding: 24px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .header-left { display: flex; align-items: center; gap: 16px; }
+
+  .bars { display: flex; align-items: flex-end; gap: 4px; height: 40px; flex-shrink: 0; }
+  .bar { border-radius: 3px; background: linear-gradient(180deg, #35B6B4, #006677); }
+
+  .ht-title { font-size: 16px; font-weight: 700; color: white; }
+  .ht-title span { color: var(--teal); font-weight: 800; }
+  .ht-sub { font-size: 10px; font-weight: 600; color: var(--teal); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 3px; }
+  .ht-brand { font-size: 9px; color: white; opacity: 0.35; letter-spacing: 0.16em; text-transform: uppercase; margin-top: 2px; }
+
+  .header-badge {
+    background: #35B6B420;
+    border: 1px solid #35B6B440;
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--teal);
+  }
+
+  /* HERO */
+  .hero {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 48px 32px;
+    text-align: center;
+  }
+
+  .hero-emoji { font-size: 48px; margin-bottom: 16px; }
+
+  .hero-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-title span { color: var(--teal); }
+
+  .hero-desc {
+    font-size: 15px;
+    color: var(--text-muted);
+    max-width: 520px;
+    margin: 0 auto 24px;
+    line-height: 1.7;
+    font-weight: 500;
+  }
+
+  .hero-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #f0fafa;
+    border: 1.5px solid var(--teal);
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--teal-dark);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .hero-link:hover { background: var(--teal); color: white; }
+
+  /* TABS */
+  .tabs-wrap {
+    padding: 32px 32px 0;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .tabs-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .tab-btn:hover { border-color: var(--teal); color: var(--teal-dark); }
+  .tab-btn.active { background: var(--teal); border-color: var(--teal); color: white; box-shadow: 0 4px 12px #35b6b430; }
+
+  /* CONTENT */
+  .main {
+    padding: 32px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .browser-section { display: none; animation: fadeUp 0.4s ease; }
+  .browser-section.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: white;
+    border-radius: 20px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 12px #0000000a;
+  }
+
+  .section-icon-big {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
+  }
+
+  .section-icon-big.safari { background: linear-gradient(135deg, #007AFF18, #007AFF08); }
+  .section-icon-big.chrome { background: linear-gradient(135deg, #34A85318, #34A85308); }
+  .section-icon-big.samsung { background: linear-gradient(135deg, #1428A018, #1428A008); }
+  .section-icon-big.firefox { background: linear-gradient(135deg, #FF7C0018, #FF7C0008); }
+  .section-icon-big.edge { background: linear-gradient(135deg, #0078D418, #0078D408); }
+
+  .section-header-text strong { font-size: 17px; font-weight: 800; color: var(--navy); display: block; }
+  .section-header-text span { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+
+  /* STEPS GRID */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .step-card {
+    background: white;
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    padding: 20px;
+    box-shadow: 0 2px 8px #0000000a;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .step-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--teal), var(--teal-dark));
+  }
+
+  .step-number {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 800; color: white;
+    margin-bottom: 12px;
+  }
+
+  .step-card-title { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .step-card-desc { font-size: 12px; color: var(--text-muted); line-height: 1.6; font-weight: 500; }
+
+  .step-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #f0fafa;
+    border: 1px solid #c8eeed;
+    color: var(--teal-dark);
+    border-radius: 8px;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-top: 8px;
+  }
+
+  /* TIP BOX */
+  .tip-box {
+    background: linear-gradient(135deg, var(--navy), #0a1155);
+    border-radius: 18px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .tip-icon-big { font-size: 32px; flex-shrink: 0; }
+  .tip-text strong { display: block; font-size: 14px; font-weight: 700; color: white; margin-bottom: 4px; }
+  .tip-text span { font-size: 12px; color: var(--teal); font-weight: 500; line-height: 1.6; }
+
+  /* NOTIF */
+  .notif-card {
+    background: white;
+    border-radius: 20px;
+    border: 1.5px solid var(--teal);
+    padding: 24px;
+    box-shadow: 0 4px 16px #35b6b415;
+    max-width: 900px;
+    margin: 0 auto 32px;
+  }
+
+  .notif-inner { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .notif-text { flex: 1; }
+  .notif-text strong { display: block; font-size: 15px; font-weight: 800; color: var(--navy); margin-bottom: 4px; }
+  .notif-text span { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+
+  .notif-btn {
+    background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+    border: none; border-radius: 14px; padding: 12px 24px;
+    color: white; font-size: 13px; font-weight: 700;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    cursor: pointer; white-space: nowrap;
+    display: flex; align-items: center; gap: 8px;
+    transition: all 0.2s; box-shadow: 0 4px 14px #35b6b430;
+    flex-shrink: 0;
+  }
+
+  .notif-btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  .notif-btn:disabled { opacity: 0.5; cursor: default; transform: none; }
+
+  .notif-status {
+    margin-top: 12px; font-size: 12px; font-weight: 600;
+    display: none; padding: 10px 14px; border-radius: 10px;
+  }
+
+  .notif-status.success { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; display: block; }
+  .notif-status.error { background: #fff1f2; color: #be123c; border: 1px solid #fecdd3; display: block; }
+  .notif-status.unsupported { background: #fffbeb; color: #d97706; border: 1px solid #fde68a; display: block; }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 11px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    background: white;
+  }
+
+  @media (max-width: 600px) {
+    .header { padding: 20px; }
+    .hero { padding: 32px 20px; }
+    .tabs-wrap, .main { padding: 20px; }
+    .steps-grid { grid-template-columns: 1fr 1fr; }
+    .hero-title { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <div class="bars">
+      <div class="bar" style="width:7px;height:14px"></div>
+      <div class="bar" style="width:7px;height:24px"></div>
+      <div class="bar" style="width:7px;height:40px"></div>
+      <div class="bar" style="width:7px;height:18px;opacity:0.4"></div>
+    </div>
+    <div style="width:1px;height:44px;background:#35B6B430;flex-shrink:0;"></div>
+    <div>
+      <div class="ht-title">Inteligência <span>de Mercado</span></div>
+      <div class="ht-sub">Novos Negócios e Estratégia</div>
+      <div class="ht-brand">Grupo DB</div>
+    </div>
+  </div>
+  <div class="header-badge">📱 Guia de instalação</div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-emoji">📲</div>
+  <div class="hero-title">Salve o canal na sua <span>tela inicial!</span></div>
+  <div class="hero-desc">Acesse o canal de Inteligência de Mercado com um toque, como se fosse um app. Escolha seu navegador abaixo e siga os passos.</div>
+  <a class="hero-link" href="https://leticiavaledarosa.github.io/im-grupodb/" target="_blank">🔗 Abrir o canal</a>
+</div>
+
+<!-- TABS -->
+<div class="tabs-wrap">
+  <div class="tabs-label">Selecione seu navegador:</div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('safari')">🍎 Safari (iPhone)</button>
+    <button class="tab-btn" onclick="showTab('chrome-ios')">🌐 Chrome (iPhone)</button>
+    <button class="tab-btn" onclick="showTab('chrome-android')">🤖 Chrome (Android)</button>
+    <button class="tab-btn" onclick="showTab('samsung')">📱 Samsung Internet</button>
+    <button class="tab-btn" onclick="showTab('firefox')">🦊 Firefox</button>
+    <button class="tab-btn" onclick="showTab('edge')">🔷 Microsoft Edge</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- SAFARI iPhone -->
+  <div class="browser-section active" id="tab-safari">
+    <div class="section-header">
+      <div class="section-icon-big safari">🍎</div>
+      <div class="section-header-text">
+        <strong>Safari — iPhone / iPad</strong>
+        <span>Recomendado para usuários Apple. iOS 12 ou superior.</span>
+      </div>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <div class="step-card-title">Abra o canal no Safari</div>
+        <div class="step-card-desc">Certifique-se de estar usando o Safari — não o Chrome ou outro app.</div>
+        <div class="step-tag">🔗 Abra o link do canal</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <div class="step-card-title">Toque em Compartilhar</div>
+        <div class="step-card-desc">Na barra inferior do Safari, toque no ícone de compartilhar.</div>
+        <div class="step-tag">⬆️ Ícone de seta para cima</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <div class="step-card-title">Adicionar à Tela de Início</div>
+        <div class="step-card-desc">Role o menu que aparecer e toque em "Adicionar à Tela de Início".</div>
+        <div class="step-tag">➕ Adicionar à Tela de Início</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">4</div>
+        <div class="step-card-title">Confirme e pronto!</div>
+        <div class="step-card-desc">O nome já vem preenchido. Toque em "Adicionar" no canto superior direito.</div>
+        <div class="step-tag">✅ Toque em "Adicionar"</div>
+      </div>
+    </div>
+    <div class="tip-box">
+      <div class="tip-icon-big">💡</div>
+      <div class="tip-text">
+        <strong>Dica para iPhone</strong>
+        <span>O Safari é o navegador nativo da Apple e oferece a melhor experiência para salvar sites como app na tela inicial.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHROME iPhone -->
+  <div class="browser-section" id="tab-chrome-ios">
+    <div class="section-header">
+      <div class="section-icon-big chrome">🌐</div>
+      <div class="section-header-text">
+        <strong>Chrome — iPhone / iPad</strong>
+        <span>Para usuários que preferem o Chrome no iPhone.</span>
+      </div>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <div class="step-card-title">Abra o canal no Chrome</div>
+        <div class="step-card-desc">Acesse o link do canal usando o app Chrome no iPhone.</div>
+        <div class="step-tag">🔗 Abra o link do canal</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <div class="step-card-title">Toque nos 3 pontinhos</div>
+        <div class="step-card-desc">No canto inferior direito do Chrome, toque no menu ⋯</div>
+        <div class="step-tag">⋯ Menu inferior direito</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <div class="step-card-title">Compartilhar</div>
+        <div class="step-card-desc">Toque em "Compartilhar" no menu que aparecer.</div>
+        <div class="step-tag">⬆️ Compartilhar</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">4</div>
+        <div class="step-card-title">Adicionar à Tela de Início</div>
+        <div class="step-card-desc">Role e toque em "Adicionar à Tela de Início" e confirme.</div>
+        <div class="step-tag">✅ Adicionar</div>
+      </div>
+    </div>
+    <div class="tip-box">
+      <div class="tip-icon-big">💡</div>
+      <div class="tip-text">
+        <strong>Dica para Chrome no iPhone</strong>
+        <span>No iPhone, o Chrome usa o compartilhamento do iOS para adicionar à tela inicial — o processo é parecido com o Safari.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHROME Android -->
+  <div class="browser-section" id="tab-chrome-android">
+    <div class="section-header">
+      <div class="section-icon-big chrome">🤖</div>
+      <div class="section-header-text">
+        <strong>Chrome — Android</strong>
+        <span>O navegador mais popular no Android. Android 8 ou superior.</span>
+      </div>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <div class="step-card-title">Abra o canal no Chrome</div>
+        <div class="step-card-desc">Acesse o link do canal usando o Chrome no Android.</div>
+        <div class="step-tag">🔗 Abra o link do canal</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <div class="step-card-title">Toque nos 3 pontinhos</div>
+        <div class="step-card-desc">No canto superior direito do Chrome, toque no menu ⋮</div>
+        <div class="step-tag">⋮ Canto superior direito</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <div class="step-card-title">Adicionar à tela inicial</div>
+        <div class="step-card-desc">Toque em "Adicionar à tela inicial" ou "Instalar app".</div>
+        <div class="step-tag">➕ Adicionar à tela inicial</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">4</div>
+        <div class="step-card-title">Confirme e pronto!</div>
+        <div class="step-card-desc">Toque em "Adicionar" na janela que aparecer na tela.</div>
+        <div class="step-tag">✅ Toque em "Adicionar"</div>
+      </div>
+    </div>
+    <div class="tip-box">
+      <div class="tip-icon-big">💡</div>
+      <div class="tip-text">
+        <strong>Dica para Android</strong>
+        <span>No Android, o Chrome pode mostrar um banner automático para instalar o app — se aparecer, é só tocar em "Instalar"!</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAMSUNG -->
+  <div class="browser-section" id="tab-samsung">
+    <div class="section-header">
+      <div class="section-icon-big samsung">📱</div>
+      <div class="section-header-text">
+        <strong>Samsung Internet</strong>
+        <span>Navegador nativo dos celulares Samsung.</span>
+      </div>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <div class="step-card-title">Abra no Samsung Internet</div>
+        <div class="step-card-desc">Acesse o link do canal usando o Samsung Internet.</div>
+        <div class="step-tag">🔗 Abra o link do canal</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <div class="step-card-title">Toque no menu ☰</div>
+        <div class="step-card-desc">Toque no ícone de menu no canto inferior direito da tela.</div>
+        <div class="step-tag">☰ Menu inferior direito</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <div class="step-card-title">Adicionar página a</div>
+        <div class="step-card-desc">Toque em "Adicionar página a" e depois em "Tela inicial".</div>
+        <div class="step-tag">➕ Tela inicial</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">4</div>
+        <div class="step-card-title">Confirme e pronto!</div>
+        <div class="step-card-desc">Toque em "Adicionar" para salvar o ícone na tela inicial.</div>
+        <div class="step-tag">✅ Toque em "Adicionar"</div>
+      </div>
+    </div>
+    <div class="tip-box">
+      <div class="tip-icon-big">💡</div>
+      <div class="tip-text">
+        <strong>Dica Samsung</strong>
+        <span>O Samsung Internet é muito estável e rápido. O processo é bem parecido com o Chrome — apenas o menu visual muda um pouco.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIREFOX -->
+  <div class="browser-section" id="tab-firefox">
+    <div class="section-header">
+      <div class="section-icon-big firefox">🦊</div>
+      <div class="section-header-text">
+        <strong>Firefox</strong>
+        <span>Para usuários Android. No iPhone, use o Safari.</span>
+      </div>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <div class="step-card-title">Abra no Firefox</div>
+        <div class="step-card-desc">Acesse o link do canal usando o Firefox no Android.</div>
+        <div class="step-tag">🔗 Abra o link do canal</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <div class="step-card-title">Toque nos 3 pontinhos</div>
+        <div class="step-card-desc">No canto superior direito do Firefox, toque no menu ⋮</div>
+        <div class="step-tag">⋮ Menu superior direito</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <div class="step-card-title">Instalar</div>
+        <div class="step-card-desc">Toque em "Instalar" ou "Adicionar à tela inicial" no menu.</div>
+        <div class="step-tag">➕ Instalar</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">4</div>
+        <div class="step-card-title">Confirme e pronto!</div>
+        <div class="step-card-desc">Toque em "Adicionar" na janela que aparecer.</div>
+        <div class="step-tag">✅ Toque em "Adicionar"</div>
+      </div>
+    </div>
+    <div class="tip-box">
+      <div class="tip-icon-big">💡</div>
+      <div class="tip-text">
+        <strong>Dica Firefox</strong>
+        <span>No Firefox para iPhone, o processo é diferente — recomendamos usar o Safari para adicionar à tela inicial no iPhone.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDGE -->
+  <div class="browser-section" id="tab-edge">
+    <div class="section-header">
+      <div class="section-icon-big edge">🔷</div>
+      <div class="section-header-text">
+        <strong>Microsoft Edge</strong>
+        <span>Para usuários Android e iPhone com Edge.</span>
+      </div>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <div class="step-card-title">Abra no Edge</div>
+        <div class="step-card-desc">Acesse o link do canal usando o Microsoft Edge.</div>
+        <div class="step-tag">🔗 Abra o link do canal</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <div class="step-card-title">Toque nos 3 pontinhos</div>
+        <div class="step-card-desc">No canto inferior central do Edge, toque no menu ⋯</div>
+        <div class="step-tag">⋯ Menu inferior</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <div class="step-card-title">Adicionar à Tela Inicial</div>
+        <div class="step-card-desc">Role o menu e toque em "Adicionar à tela inicial" ou "Fixar na tela inicial".</div>
+        <div class="step-tag">➕ Adicionar à tela inicial</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">4</div>
+        <div class="step-card-title">Confirme e pronto!</div>
+        <div class="step-card-desc">Toque em "Adicionar" ou "Pin" para confirmar.</div>
+        <div class="step-tag">✅ Confirmar</div>
+      </div>
+    </div>
+    <div class="tip-box">
+      <div class="tip-icon-big">💡</div>
+      <div class="tip-text">
+        <strong>Dica Edge</strong>
+        <span>O Edge no mobile funciona de forma muito similar ao Chrome — o processo é praticamente idêntico.</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- NOTIFICAÇÕES -->
+<div style="max-width:900px;margin:0 auto;padding:0 32px 32px;">
+  <div class="notif-card">
+    <div class="notif-inner">
+      <div style="font-size:36px;flex-shrink:0;">🔔</div>
+      <div class="notif-text">
+        <strong>Ativar lembretes semanais</strong>
+        <span>Receba uma notificação toda segunda-feira para lembrar de registrar sua inteligência de mercado!</span>
+      </div>
+      <button class="notif-btn" id="notifBtn" onclick="ativarNotificacoes()">🔔 Ativar notificações</button>
+    </div>
+    <div class="notif-status" id="notifStatus"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  Grupo DB · Canal de Inteligência de Mercado · Novos Negócios e Estratégia
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.browser-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+async function ativarNotificacoes() {
+  const btn = document.getElementById('notifBtn');
+  const status = document.getElementById('notifStatus');
+  if (!('Notification' in window)) {
+    status.className = 'notif-status unsupported';
+    status.textContent = '⚠️ Seu navegador não suporta notificações. Tente pelo Chrome.';
+    return;
+  }
+  btn.disabled = true;
+  btn.textContent = '⏳ Aguardando permissão...';
+  const permission = await Notification.requestPermission();
+  if (permission === 'granted') {
+    new Notification('✅ Lembretes ativados! – IM Grupo DB', {
+      body: 'Você receberá lembretes toda segunda-feira para registrar sua Intel de Mercado!'
+    });
+    btn.innerHTML = '✅ Notificações ativadas!';
+    btn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+    status.className = 'notif-status success';
+    status.textContent = '🎉 Você receberá lembretes toda segunda-feira às 8h!';
+    localStorage.setItem('im-notif', 'true');
+  } else {
+    btn.disabled = false;
+    btn.innerHTML = '🔔 Ativar notificações';
+    status.className = 'notif-status error';
+    status.textContent = '❌ Permissão negada. Ative nas configurações do navegador.';
+  }
+}
+
+window.onload = () => {
+  if (localStorage.getItem('im-notif') === 'true' && Notification.permission === 'granted') {
+    const btn = document.getElementById('notifBtn');
+    const status = document.getElementById('notifStatus');
+    btn.innerHTML = '✅ Notificações ativadas!';
+    btn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+    btn.disabled = true;
+    status.className = 'notif-status success';
+    status.textContent = '🎉 Você já está recebendo lembretes toda segunda-feira às 8h!';
+  }
+};
+</script>
+
+</body>
+</html>
